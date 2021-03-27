@@ -39,6 +39,7 @@
                       <th>Name</th>
                       <th>Date</th>
                       <th>Email</th>
+                      <th>Role</th>
                       <th>Actions</th>
                     </tr>
                     </thead>
@@ -48,7 +49,17 @@
                       <td><a href="/users/{{$user->id}}">{{$user->name}}</a></td>
                       <td>{{date('d-M-Y H:i A', strtotime($user->created_at))}}</td>
                       <td>{{$user->email}}</td>
+                      <td>
+                        @foreach($user->roles as $role)
+                          <h3 class="badge badge-pill badge-primary">{{$role->name}}</h3>
+                        @endforeach
+                      </td>
                       <td align="center">
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-sm"><i class="fas fa-eye"></i></button>
+                          <button type="button" class="btn btn-default btn-sm"><i class="fas fa-pen"></i></button>
+                          <button type="button" class="btn btn-default btn-sm"><i class="fas fa-trash"></i></button>
+                        </div>
                       </td>
                     </tr>
                     @endforeach

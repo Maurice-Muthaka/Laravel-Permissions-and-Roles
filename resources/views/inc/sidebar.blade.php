@@ -37,7 +37,49 @@
             </a>
           </li>
 
-          <li class="nav-item">
+            <!-- <li class="nav-item">
+            <a href="/roles" class="nav-link {{ Request::is('roles') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-key"></i>
+              <p>
+                Roles & Permissions
+              </p>
+            </a>
+          </li> -->
+
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link {{ Request::is(['roles', 'users', 'permissions']) ? 'active' : '' }}">
+              <i class="nav-icon fas fa-key"></i>
+              <p>
+                User Management
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/roles" class="nav-link {{ Request::is('roles') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Roles</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/permissions" class="nav-link {{ Request::is('permissions') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Permissions</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="/users" class="nav-link {{ Request::is('users') ? 'active' : '' }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Users</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- <li class="nav-item">
             <a href="/users" class="nav-link {{ Request::is('users') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user"></i>
               <p>
@@ -45,7 +87,8 @@
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
-          </li>
+          </li> -->
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-users"></i>

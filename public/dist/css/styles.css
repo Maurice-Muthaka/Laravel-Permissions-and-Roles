@@ -1,0 +1,11 @@
+.icons {
+    background: #f4f6f9;;
+    border-radius: 50% !important;
+    margin-right: 5px;
+}
+.icons:hover {
+    background: skyblue;
+}
+.icon {
+    font-size: 12px;
+}

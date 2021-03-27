@@ -20,4 +20,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('Dashboard');
+Route::get('/roles', [App\Http\Controllers\RoleController::class, 'index']);
+Route::post('/roles', [App\Http\Controllers\RoleController::class, 'create_role']);
+Route::get('/roles/{id}', [App\Http\Controllers\RoleController::class, 'edit_role']);
+Route::post('/role_store/{id}', [App\Http\Controllers\RoleController::class, 'store_role']);
+
+Route::get('/permissions', [App\Http\Controllers\PermissionController::class, 'index']);
+Route::post('/permissions', [App\Http\Controllers\PermissionController::class, 'create_permission']);
+
 Route::resource('users', 'App\Http\Controllers\UserController');
