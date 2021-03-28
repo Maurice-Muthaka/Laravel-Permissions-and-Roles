@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -25,8 +26,9 @@ class RoleController extends Controller
      */
     public function index() {
         $roles = Role::with('permissions')->orderBy('created_at', 'desc')->get();
+        $permissions = Permission::with('roles')->orderBy('created_at', 'desc')->get();
  
-        return view('roles.index')->with('roles', $roles);
+        return view('roles.index')->with('roles', $roles)->with('permissions', $permissions);
 
         // return $roles;
     }
@@ -36,7 +38,11 @@ class RoleController extends Controller
             'name' => 'required|string|min:3|unique:roles',
         ]);
 
-        Role::create(['name' => $request->input('name')]);
+        $permissions = $request->input('permissions');
+
+        $role = Role::create(['name' => $request->input('name')]);
+
+        $role->givePermissionTo($permissions);
 
         return redirect('/roles')->with('success', 'Role created successfully');
     }
@@ -46,11 +52,9 @@ class RoleController extends Controller
         
         $permissions = Permission::orderBy('created_at', 'desc')->get();
         foreach ($permissions as $permission) {
+
             if($role->hasPermissionTo($permission->name)){
-                $permission['ckecked'] = 'checked';
-            }
-            else {
-                $permission['ckecked'] = 'none';
+                $permission->name = "";
             }
         }
         
@@ -65,11 +69,28 @@ class RoleController extends Controller
         return redirect('/roles')->with('success', 'Role updated successfully');
     }
 
+    public function restrict(Request $request, $permission_id, $role_id) {
+        $role = Role::findById($role_id);
+        $permission = Permission::findById($permission_id);
+        $role->revokePermissionTo($permission);
+        
+        return redirect('/roles/' . $role_id)->with('success', 'Permission removed successfully');
+    }
+
+    public function remove_role(Request $request, $user_id, $role_id) {
+        $user = User::find($user_id);
+        $role = Role::findById($role_id);
+
+        $user->removeRole($role);
+        
+        return redirect('/users/'.$user_id.'/edit')->with('success', 'Role removed successfully');
+    }
+
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $role = Role::findById($id);
+        $role->delete();
 
-        $category->delete();
-        return redirect('/categories')->with('success', 'Category deleted');
+        return redirect('/roles')->with('success', 'Role deleted successfully');
     }
 }

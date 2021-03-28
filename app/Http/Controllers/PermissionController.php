@@ -25,8 +25,9 @@ class PermissionController extends Controller
      */
     public function index() {
         $permissions = Permission::with('roles')->orderBy('created_at', 'desc')->get();
+        $roles = Role::with('permissions')->orderBy('created_at', 'desc')->get();
 
-        return view('roles.permission')->with('permissions', $permissions);
+        return view('roles.permission')->with('permissions', $permissions)->with('roles', $roles);
 
         // return $roles;
     }
@@ -36,16 +37,19 @@ class PermissionController extends Controller
             'name' => 'required|string|min:3|unique:permissions',
         ]);
 
-        Permission::create(['name' => $request->input('name')]);
+        $roles = $request->input('roles');
+
+        $permission = Permission::create(['name' => $request->input('name')]);
+        $permission->assignRole($roles);
 
         return redirect('/permissions')->with('success', 'Permission created successfully');
     }
 
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $permission = Permission::findById($id);
+        $permission->delete();
 
-        $category->delete();
-        return redirect('/categories')->with('success', 'Category deleted');
+        return redirect('/permissions')->with('success', 'Permission deleted successfully');
     }
 }

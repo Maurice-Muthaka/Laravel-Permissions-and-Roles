@@ -13,12 +13,17 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        @if(auth()->user()->picture)
+          <img src="/storage/profile_images/{{auth()->user()->picture}}" class="img-circle elevation-2" alt="User Image">
+        @else
+        <img src="/storage/profile_images/noimage.jpg" class="img-circle elevation-2" alt="User Image">
+        @endif
         </div>
+
         <div class="info">
             @guest
             @else
-                <a href="/" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="/profile" class="d-block">{{ Auth::user()->name }}</a>
             @endguest
         </div>
       </div>
@@ -46,8 +51,8 @@
             </a>
           </li> -->
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link {{ Request::is(['roles', 'users', 'permissions']) ? 'active' : '' }}">
+          <li class="nav-item has-treeview {{ Request::is(['roles*', 'users*', 'permissions*']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link {{ Request::is(['roles*', 'users*', 'permissions*']) ? 'active' : '' }}">
               <i class="nav-icon fas fa-key"></i>
               <p>
                 User Management
@@ -57,21 +62,21 @@
 
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/roles" class="nav-link {{ Request::is('roles') ? 'active' : '' }}">
+                <a href="/roles" class="nav-link {{ Request::is('roles*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Roles</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="/permissions" class="nav-link {{ Request::is('permissions') ? 'active' : '' }}">
+                <a href="/permissions" class="nav-link {{ Request::is('permissions*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Permissions</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="/users" class="nav-link {{ Request::is('users') ? 'active' : '' }}">
+                <a href="/users" class="nav-link {{ Request::is('users*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users</p>
                 </a>

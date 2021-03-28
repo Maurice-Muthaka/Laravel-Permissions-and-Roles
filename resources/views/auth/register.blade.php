@@ -65,6 +65,28 @@
         </div>
 
         <div class="input-group mb-3">
+          <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" placeholder="Phone number" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-phone"></span>
+            </div>
+          </div>
+          @error('phone')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
+        <div class="input-group mb-3">
+          <select name="gender" class="custom-select">
+              <option>Male</option>
+              <option>Female</option>
+          </select>
+        </div>
+
+        <div class="input-group mb-3">
           <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required autocomplete="new-password">
 
           <div class="input-group-append">
@@ -98,9 +120,9 @@
           </div>
           <!-- /.col -->
           <div class="col-4">
-          <button type="submit" class="btn btn-primary">
-            {{ __('Register') }}
-        </button>
+            <button type="submit" class="btn btn-primary">
+                {{ __('Register') }}
+            </button>
           </div>
           <!-- /.col -->
         </div>

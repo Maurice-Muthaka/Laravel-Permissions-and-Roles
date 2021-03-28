@@ -26,7 +26,7 @@
           <!-- left column -->
           <div class="col-md-12">
             <!-- general form elements -->
-            <div class="card card-primary">
+            <div class="card card-default">
               <div class="card-header">
                 <h3 class="card-title">Edit {{$role->name}}</h3>
               </div>
@@ -41,20 +41,26 @@
                     <label for="exampleInputEmail1">Role name</label>
                     <input type="email" class="form-control" value="{{$role->name}}" readonly>
                   </div>
-                <div class="form-group">
-                    <label for="">Add Permissions</label>
-                </div>
+
+                  <h4>Permissions</h4>
+
+                @foreach($role->permissions as $permission)
+                    <span class="round">{{$permission->name}} <a class="del" onclick="return confirm('Are you sure you want to revoke {{$permission->name}} permission to {{$role->name}}?')" href="/restrict/{{$permission->id}}/role/{{$role->id}}"><i class="fas fa-times-circle"></i></a></span>
+                @endforeach
+                <hr>
+                <h4>Add Permissions</h4>
 
                 @foreach($permissions as $permission)
-
+                  @if($permission->name != "")
                     <div class="form-check">
                         <input type="checkbox" name="permissions[]" value="{{$permission->name}}" class="form-check-input" id="{{$permission->name}}">
                         <label class="form-check-label" for="{{$permission->name}}">{{$permission->name}}</label>
                     </div>
+                  @endif
                 @endforeach
                 <!-- /.card-body -->
 
-                <div class="card-footer">
+                <div class="card-footer mt-3">
                   <button type="submit" class="btn btn-primary">Update</button>
                 </div>
               </form>

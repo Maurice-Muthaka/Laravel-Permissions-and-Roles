@@ -30,9 +30,7 @@
                 <h3 class="card-title">Permissions</h3>
 
                 <div class="card-tools">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-permission">Add Permission</button>
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
+                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-permission">Add Permission</button>
                 </div>
                 </div>
                 <div class="card-body">
@@ -41,6 +39,7 @@
                         <table id="example" class="table table-striped table-bordered dt-responsive nowrap">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Name</th>
                                     <th>Roles</th>
                                     <th>Actions</th>
@@ -50,16 +49,16 @@
 
                             @foreach ($permissions as $permission)
                             <tr>
+                                <td>{{$permission->id}}</td>
                                 <td>{{$permission->name}}</td>
                                 <td>
                                   @foreach($permission->roles as $role)
-                                      <span class="badge badge-pill badge-success pl-3 pr-3">{{$role->name}}</span>
+                                      <span class="badge badge-pill round2 badge-primary pl-2 pr-2">{{$role->name}}</span>
                                   @endforeach
                                 </td>
                                 <td class="py-0 align-middle">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                                    <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                    <a onclick="return confirm('Are you sure you want to delete {{$permission->name}} permission?')" href="/permissions/{{$permission->id}}" class="btn btn-default btn-sm"><i class="fas fa-trash"></i></a>
                                 </div>
                                 </td>
                             </tr>
@@ -97,6 +96,15 @@
                     <div class="input-group">
                         <input type="text" class="form-control" name="name" placeholder="Permission Name">
                     </div>
+                    <br>
+                    <h4>Assign to roles</h4>
+
+                    @foreach($roles as $role)
+                        <div class="form-check">
+                            <input type="checkbox" name="roles[]" value="{{$role->name}}" class="form-check-input" id="{{$role->name}}">
+                            <label class="form-check-label" for="{{$role->name}}">{{$role->name}}</label>
+                        </div>
+                    @endforeach
                 
             </div>
             <div class="modal-footer justify-content-between">

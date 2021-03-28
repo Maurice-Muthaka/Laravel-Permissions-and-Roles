@@ -32,8 +32,6 @@
 
                 <div class="card-tools">
                 <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default">Add Role</button>
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fas fa-minus"></i></button>
                 </div>
                 </div>
                 <div class="card-body">
@@ -54,13 +52,13 @@
                                 <td>{{$role->name}}</td>
                                 <td>
                                   @foreach($role->permissions as $permission)
-                                      <span class="badge badge-pill badge-success pl-3 pr-3">{{$permission->name}}</span>
+                                      <span class="badge badge-pill badge-primary round2 pl-2 pr-2">{{$permission->name}}</span>
                                   @endforeach
                                 </td>
                                 <td class="py-0 align-middle">
                                 <div class="btn-group btn-group-sm">
                                     <a href="/roles/{{$role->id}}" class="btn btn-default btn-sm"><i class="fas fa-pen"></i></a>
-                                    <a onclick="return confirm('Are you sure you want to delete this role ?')" href="/roles/{{$role->id}}" class="btn btn-default btn-sm"><i class="fas fa-trash"></i></a>
+                                    <a onclick="return confirm('Are you sure you want to delete the {{$role->name}} role?')" href="/role_delete/{{$role->id}}" class="btn btn-default btn-sm"><i class="fas fa-trash"></i></a>
                                 </div>
                                 </td>
                             </tr>
@@ -98,6 +96,16 @@
                     <div class="input-group">
                         <input type="text" class="form-control" name="name" placeholder="Role Name">
                     </div>
+                    <br>
+                    <h4>Grant Permissions</h4>
+
+                    @foreach($permissions as $permission)
+                        <div class="form-check">
+                            <input type="checkbox" name="permissions[]" value="{{$permission->name}}" class="form-check-input" id="{{$permission->name}}">
+                            <label class="form-check-label" for="{{$permission->name}}">{{$permission->name}}</label>
+                        </div>
+                    @endforeach
+                    <!-- /.card-body -->
                 
             </div>
             <div class="modal-footer justify-content-between">

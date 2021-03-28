@@ -9,3 +9,26 @@
 .icon {
     font-size: 12px;
 }
+.round {
+    background: #666;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #ffffff;
+    border-radius: 20px;
+}
+.round2 {
+    font-size: 14px;
+}
+.del {
+    color: #ffffff;
+    margin-right: 7px;
+    font-size: 20px;
+}
+.del:hover {
+    color: #999999;
+}
+
+.nav-icon {
+    font-size: 20px;
+}
